@@ -1,13 +1,20 @@
 package net.squishydev.testmod;
 
+import java.util.Iterator;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldProviderSurface;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -16,6 +23,7 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.common.config.Configuration;
 
 @Mod(modid="TestMod",name="Test Mod", version="1.0.0")
 
@@ -23,7 +31,9 @@ public class TestMod {
 
 	public static Item tool;
 	public static Item ignot;
+	public static boolean vanillaRecipesDisabled;
 	public final static Block ore = new Ore(Material.rock);
+	public final static Block crushingblock = new CrushingBlock(Material.rock);
 	
 	@Instance(value="TestMod")
 	public static TestMod instance;
@@ -34,11 +44,19 @@ public class TestMod {
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
+		Configuration config = new Configuration(event.getSuggestedConfigurationFile());
+		config.load();
+		vanillaRecipesDisabled = config.get("VanillaRecipesDisabled", Configuration.CATEGORY_GENERAL, true).getBoolean();
+		config.save();
+		if (vanillaRecipesDisabled) {
+			removeVanillaRecipes();
+		}
 		tool = new Tool();
 		ignot = new Ignot();
 		GameRegistry.registerItem(tool, "Tool");
 		GameRegistry.registerItem(ignot, "Ignot");
 		GameRegistry.registerBlock(ore,  "Ore");
+		GameRegistry.registerBlock(crushingblock, "CrushingBlock");
 	}
 	
 	@EventHandler
@@ -51,16 +69,36 @@ public class TestMod {
 		ItemStack oreStack = new ItemStack(ore);
 		ItemStack ingotStack = new ItemStack(ignot, 1);
 		ItemStack toolStack = new ItemStack(tool, 1);
+		ItemStack crushingBlockStack = new ItemStack(crushingblock, 1);
 		ItemStack stick = new ItemStack(Items.stick, 1);
-		GameRegistry.addShapelessRecipe(diamonds, dirt);
-		GameRegistry.addRecipe(diamonds,"xyx","y y","xyx",'x',dirt,'y',gravel);
-		GameRegistry.addSmelting(dirt, diamonds, 0.1f);
-		GameRegistry.addSmelting(oreStack, ingotStack, 0.1f);
-		GameRegistry.addRecipe(toolStack, "xxx"," y "," y ",'x', ingotStack, 'y', stick);
+		ItemStack cobblestoneStack = new ItemStack(Blocks.cobblestone, 1);
+		//GameRegistry.addShapelessRecipe(diamonds, dirt);
+		//GameRegistry.addRecipe(diamonds,"xyx","y y","xyx",'x',dirt,'y',gravel);
+		//GameRegistry.addSmelting(dirt, diamonds, 0.1f);
+		//GameRegistry.addSmelting(oreStack, ingotStack, 0.1f);
+		//GameRegistry.addRecipe(toolStack, "xxx"," y "," y ",'x', ingotStack, 'y', stick);
+		GameRegistry.addRecipe(crushingBlockStack, "x x","xxx","xxx",'x', cobblestoneStack);
+		OreGen oregen = new OreGen();
+		GameRegistry.registerWorldGenerator(oregen, 0);
+		GameRegistry.registerTileEntity(CrushingBlockTileEntity.class, "CrushingBlock");
 	}
 	
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 		
+	}
+	
+	public void removeVanillaRecipes() {
+		Item[] rem = {Items.iron_pickaxe, Items.golden_pickaxe, Items.diamond_pickaxe};
+		List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
+		Iterator<IRecipe> Leash = recipes.iterator();
+		while (Leash.hasNext()) {
+			ItemStack is = Leash.next().getRecipeOutput();
+			for (int i = 0;i<rem.length;i++) {
+				if (is!=null&&is.getItem()==rem[i]) {
+					Leash.remove();
+				}
+			}
+		}
 	}
 }
