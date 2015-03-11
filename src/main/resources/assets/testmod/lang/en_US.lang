@@ -2,3 +2,5 @@ item.Tool.name=Tool
 item.Ignot.name=Ignot
 tile.Ore.name=Ore
 tile.CrushingBlock.name=Crushing Block
+tile.CrushingBlock2.name=Crushing Block 2
+tile.TestFurnaceIdle.name=Test Furnace

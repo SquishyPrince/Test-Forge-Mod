@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -34,6 +35,10 @@ public class TestMod {
 	public static boolean vanillaRecipesDisabled;
 	public final static Block ore = new Ore(Material.rock);
 	public final static Block crushingblock = new CrushingBlock(Material.rock);
+	public final static Block crushingblock2 = new CrushingBlock2(Material.rock);
+	
+	public static Block testFurnaceIdle = new testFurnace(Material.rock, false).setHardness(3.5f).setCreativeTab(CreativeTabs.tabMisc);
+	public static Block testFurnaceActive = new testFurnace(Material.rock, true).setHardness(3.5f).setLightLevel(0.9f);
 	
 	@Instance(value="TestMod")
 	public static TestMod instance;
@@ -57,6 +62,9 @@ public class TestMod {
 		GameRegistry.registerItem(ignot, "Ignot");
 		GameRegistry.registerBlock(ore,  "Ore");
 		GameRegistry.registerBlock(crushingblock, "CrushingBlock");
+		GameRegistry.registerBlock(crushingblock2, "CrushingBlock2");
+		GameRegistry.registerBlock(testFurnaceActive, "TestFurnaceActive");
+		GameRegistry.registerBlock(testFurnaceIdle, "TestFurnaceIdle");
 	}
 	
 	@EventHandler
@@ -70,6 +78,7 @@ public class TestMod {
 		ItemStack ingotStack = new ItemStack(ignot, 1);
 		ItemStack toolStack = new ItemStack(tool, 1);
 		ItemStack crushingBlockStack = new ItemStack(crushingblock, 1);
+		ItemStack crushingBlockStack2 = new ItemStack(crushingblock2, 1);
 		ItemStack stick = new ItemStack(Items.stick, 1);
 		ItemStack cobblestoneStack = new ItemStack(Blocks.cobblestone, 1);
 		//GameRegistry.addShapelessRecipe(diamonds, dirt);
@@ -78,9 +87,11 @@ public class TestMod {
 		//GameRegistry.addSmelting(oreStack, ingotStack, 0.1f);
 		//GameRegistry.addRecipe(toolStack, "xxx"," y "," y ",'x', ingotStack, 'y', stick);
 		GameRegistry.addRecipe(crushingBlockStack, "x x","xxx","xxx",'x', cobblestoneStack);
+		GameRegistry.addRecipe(crushingBlockStack2, "  x","xxx","xxx",'x', cobblestoneStack);
 		OreGen oregen = new OreGen();
 		GameRegistry.registerWorldGenerator(oregen, 0);
 		GameRegistry.registerTileEntity(CrushingBlockTileEntity.class, "CrushingBlock");
+		GameRegistry.registerTileEntity(CrushingBlockTileEntity2.class, "CrushingBlock2");
 	}
 	
 	@EventHandler
