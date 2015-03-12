@@ -9,6 +9,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.LanguageRegistry;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
@@ -37,6 +38,8 @@ public class TestMod {
 	public final static Block crushingblock = new CrushingBlock(Material.rock);
 	public final static Block crushingblock2 = new CrushingBlock2(Material.rock);
 	
+	public static final int testFurnaceGuiId = 0;
+	
 	public static Block testFurnaceIdle = new testFurnace(Material.rock, false).setHardness(3.5f).setCreativeTab(CreativeTabs.tabMisc);
 	public static Block testFurnaceActive = new testFurnace(Material.rock, true).setHardness(3.5f).setLightLevel(0.9f);
 	
@@ -63,8 +66,6 @@ public class TestMod {
 		GameRegistry.registerBlock(ore,  "Ore");
 		GameRegistry.registerBlock(crushingblock, "CrushingBlock");
 		GameRegistry.registerBlock(crushingblock2, "CrushingBlock2");
-		GameRegistry.registerBlock(testFurnaceActive, "TestFurnaceActive");
-		GameRegistry.registerBlock(testFurnaceIdle, "TestFurnaceIdle");
 	}
 	
 	@EventHandler
@@ -92,6 +93,10 @@ public class TestMod {
 		GameRegistry.registerWorldGenerator(oregen, 0);
 		GameRegistry.registerTileEntity(CrushingBlockTileEntity.class, "CrushingBlock");
 		GameRegistry.registerTileEntity(CrushingBlockTileEntity2.class, "CrushingBlock2");
+		GameRegistry.registerBlock(testFurnaceIdle = new testFurnace(Material.rock, false), testFurnaceItemBlock.class, "TestFurnaceIdle");
+		GameRegistry.registerBlock(testFurnaceActive = new testFurnace(Material.rock, true), testFurnaceItemBlock.class, "TestFurnaceActive");
+		GameRegistry.registerTileEntity(testFurnaceTileEntity.class, "TestFurnaceTileEntity");
+		GuiHandler guiHandler = new GuiHandler();
 	}
 	
 	@EventHandler
