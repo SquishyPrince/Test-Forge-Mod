@@ -11,6 +11,8 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlockWithMetadata;
 import net.minecraft.item.ItemStack;
@@ -23,6 +25,7 @@ import net.minecraft.world.World;
 public class testFurnace extends BlockContainer {
 
 	private final boolean isActive;
+	private static boolean keepInventory;
 	
 	@SideOnly(Side.CLIENT)
 	private IIcon iconFront;
@@ -136,5 +139,35 @@ public class testFurnace extends BlockContainer {
 		}
 		
 		return true;
+	}
+
+	public static void updateTestFurnaceBlockState(boolean active, World worldObj, int xCoord, int yCoord, int zCoord) {
+		int i = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
+		
+		TileEntity tileentity = worldObj.getTileEntity(xCoord, yCoord, zCoord);
+		keepInventory = true;
+		
+		if (active) {
+			worldObj.setBlock(xCoord, yCoord, zCoord, TestMod.testFurnaceActive);
+		} else {
+			worldObj.setBlock(xCoord, yCoord, zCoord, TestMod.testFurnaceIdle);
+		}
+		
+		keepInventory = false;
+		
+		worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 2);
+		
+		if (tileentity !=null) {
+			tileentity.validate();
+			worldObj.setTileEntity(xCoord, yCoord, zCoord, tileentity);
+		}
+	}
+	
+	public boolean hasComparatorInputOverride() {
+		return true;
+	}
+	
+	public int getComparatorInputOverride(World world, int x, int y, int z, int i) {
+		return Container.calcRedstoneFromInventory((IInventory)world.getTileEntity(x, y, z));
 	}
 }

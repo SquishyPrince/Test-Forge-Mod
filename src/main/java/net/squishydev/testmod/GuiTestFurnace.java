@@ -1,5 +1,8 @@
 package net.squishydev.testmod;
 
+import org.lwjgl.opengl.GL11;
+
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -31,7 +34,11 @@ public class GuiTestFurnace extends GuiContainer {
 	
 	@Override
 	public void drawGuiContainerBackgroundLayer(float f, int i, int j) {
+		GL11.glColor4f(1F, 1F, 1F, 1F);
 		
+		Minecraft.getMinecraft().getTextureManager().bindTexture(texture);
+		
+		drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 	}
 
 }
