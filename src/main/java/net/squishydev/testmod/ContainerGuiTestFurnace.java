@@ -45,6 +45,23 @@ public class ContainerGuiTestFurnace extends Container {
 	
 	public void detectAndSendChanges() {
 		super.detectAndSendChanges();
+		
+		for (int i = 0;i<this.crafters.size();i++) {
+			ICrafting icrafting = (ICrafting)this.crafters.get(i);
+			
+			if (this.lastCookTime!=this.testFurnace.cookTime) {
+				icrafting.sendProgressBarUpdate(this, 0, this.testFurnace.cookTime);
+			}
+			if (this.lastBurnTime!=this.testFurnace.burnTime) {
+				icrafting.sendProgressBarUpdate(this, 0, this.testFurnace.burnTime);
+			}
+			if (this.lastItemBurnTime!=this.testFurnace.currentItemBurnTime) {
+				icrafting.sendProgressBarUpdate(this, 0, this.testFurnace.currentItemBurnTime);
+			}
+		}
+		this.lastCookTime = this.testFurnace.cookTime;
+		this.lastBurnTime = this.testFurnace.burnTime;
+		this.lastBurnTime = this.testFurnace.currentItemBurnTime;
 	}
 	
 	@SideOnly(Side.CLIENT)

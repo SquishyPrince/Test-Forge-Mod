@@ -9,6 +9,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -34,6 +35,7 @@ public class testFurnace extends BlockContainer {
 
 	public testFurnace(Material material, boolean active) {
 		super(material);
+		setCreativeTab(CreativeTabs.tabMisc);
 		this.isActive = active;
 		
 		if (active){

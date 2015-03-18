@@ -39,6 +39,14 @@ public class GuiTestFurnace extends GuiContainer {
 		Minecraft.getMinecraft().getTextureManager().bindTexture(texture);
 		
 		drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
+		
+		if (this.testFurnace.isBurning()) {
+			int k = this.testFurnace.getBurnTimeRemainingScaled(12);
+			drawTexturedModalRect(guiLeft+56, guiTop+36+12-k, 176, 12-k, 14, k + 2);
+		}
+		
+		int k = this.testFurnace.getCookProgressScaled(24);
+		drawTexturedModalRect(guiLeft+79, guiTop+34, 176, 14, k+1, 16);
 	}
 
 }

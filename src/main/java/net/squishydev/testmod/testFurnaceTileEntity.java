@@ -6,6 +6,7 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 
 public class testFurnaceTileEntity extends TileEntity implements ISidedInventory{
@@ -91,6 +92,8 @@ public class testFurnaceTileEntity extends TileEntity implements ISidedInventory
 	public String getInventoryName() {
 		return null;
 	}
+	
+	
 
 	@Override
 	public boolean hasCustomInventoryName() {
@@ -121,10 +124,11 @@ public class testFurnaceTileEntity extends TileEntity implements ISidedInventory
 		if (itemStack == null) {
 			return 0;
 		} else {
-			if (itemStack==new ItemStack(Items.stick)) return 100;
-			if (itemStack==new ItemStack(Items.coal)) return 1600;
-			if (itemStack==new ItemStack(Items.lava_bucket)) return 20000;
-			if (itemStack==new ItemStack(Items.blaze_rod)) return 2400;
+			String i = itemStack.getItem().getUnlocalizedName();
+			if (i.equals(Items.stick.getUnlocalizedName())) return 100;
+			if (i.equals(Items.coal.getUnlocalizedName())) return 1600;
+			if (i.equals(Items.lava_bucket.getUnlocalizedName())) return 20000;
+			if (i.equals(Items.blaze_rod.getUnlocalizedName())) return 2400;
 			return GameRegistry.getFuelValue(itemStack);
 		}
 	}
@@ -238,4 +242,24 @@ public class testFurnaceTileEntity extends TileEntity implements ISidedInventory
 			this.markDirty();
 		}
 	}
+
+	public int getBurnTimeRemainingScaled(int i) {
+		if (this.currentItemBurnTime==0) {
+			this.currentItemBurnTime=this.furnaceSpeed;
+		}
+		System.out.println((int)(this.burnTime/this.currentItemBurnTime*i));
+		return (int)(this.burnTime/this.currentItemBurnTime*i);
+	}
+
+	public int getCookProgressScaled(int i) {
+		return (int)(this.cookTime*i/this.furnaceSpeed);
+	}
+	
+//	public void readFromNBT(NBTTagCompound nbt) {
+//		
+//	}
+//	
+//	public void writeToNBT(NBTTagCompound nbt) {
+//		
+//	}
 }
