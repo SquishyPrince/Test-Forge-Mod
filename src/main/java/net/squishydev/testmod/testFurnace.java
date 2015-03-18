@@ -129,7 +129,6 @@ public class testFurnace extends BlockContainer {
 	}
 	@Override
 	public IIcon getIcon(int side, int metaData) {
-		//System.out.println(metaData+"");
 		if (metaData >5)
 			metaData = 0;
 		return side == 1 ? this.iconTop : (side == 0 ? this.iconTop : (side != metaData ? this.blockIcon : this.iconFront));

@@ -19,7 +19,6 @@ public class MultiMaster extends BlockContainer{
 	
 	protected MultiMaster(Material material) {
 		super(material);
-		System.out.println("dd");
 		setHardness(1F);
 		setStepSound(Block.soundTypePiston);
 		setCreativeTab(CreativeTabs.tabMisc);
