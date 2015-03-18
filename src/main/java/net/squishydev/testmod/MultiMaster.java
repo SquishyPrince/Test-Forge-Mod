@@ -9,7 +9,7 @@ import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-public class MultiMaster extends BlockContainer{
+public class MultiMaster extends BlockContainer {
 
 	private boolean blockPlaced = false;
 	private MultiBlock multiBlock;
