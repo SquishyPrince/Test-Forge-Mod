@@ -1,5 +1,8 @@
 package net.squishydev.testmod;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
@@ -8,9 +11,10 @@ import net.minecraft.world.World;
 
 public class MultiController extends MultiMaster {
 
-	Block c = new MultiController(Material.rock);
+	Block c = this;
 	Block p = new MultiPart(Material.rock);
 	Block a = Blocks.air;
+	//map[y][z][x]
 	Block[][][] map = {{{p,p,p},
 						{p,p,p},
 						{p,p,p}},
@@ -22,16 +26,20 @@ public class MultiController extends MultiMaster {
 						{{p,p,p},
 						{p,p,p},
 						{p,p,p}}};
-	BuildingHandler buildingHandler = new BuildingHandler(map);
+	
+	List<Block> validBlocks = new ArrayList<Block>();
 	
 	public MultiController(Material rock) {
 		super(rock);
 		setBlockName("MultiController");
+		this.maxBlocks = 27;
+		validBlocks.add(this);
+		validBlocks.add(new MultiPart(Material.rock));
+		super.buildingHandler = new BuildingHandler(map, validBlocks);
 	}
 	
-	@Override
-	public boolean built() {
-		return true;
+	public boolean built(AssemblyResult result, int Sx, int Sy, int Sz, World worldObj, int maxBlocks) {
+		return buildingHandler.checkBuilding(result, Sx, Sy, Sz, worldObj, maxBlocks, this);
 	}
 
 	@Override

@@ -7,6 +7,7 @@ public class MultiPart extends Block{
 
 	protected MultiPart(Material rock) {
 		super(rock);
+		setBlockName("Part");
 	}
 
 }

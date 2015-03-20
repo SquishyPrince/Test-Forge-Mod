@@ -36,6 +36,7 @@ public class TestMod {
 	public static Item multiWrench;
 	public static boolean vanillaRecipesDisabled;
 	public final static Block multiController = new MultiController(Material.rock);
+	public final static Block multiPart = new MultiPart(Material.rock);
 	public final static Block ore = new Ore(Material.rock);
 	public final static Block crushingblock = new CrushingBlock(Material.rock);
 	public final static Block crushingblock2 = new CrushingBlock2(Material.rock);
@@ -72,6 +73,7 @@ public class TestMod {
 		GameRegistry.registerBlock(crushingblock, "CrushingBlock");
 		GameRegistry.registerBlock(crushingblock2, "CrushingBlock2");
 		GameRegistry.registerBlock(multiController, "MultiController");
+		GameRegistry.registerBlock(multiPart, "MultiPart");
 	}
 	
 	@EventHandler

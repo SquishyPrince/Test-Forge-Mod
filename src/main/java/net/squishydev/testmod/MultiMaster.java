@@ -13,9 +13,11 @@ public class MultiMaster extends BlockContainer {
 
 	private boolean blockPlaced = false;
 	private MultiBlock multiBlock;
+	int maxBlocks;
 	int xCoord;
 	int yCoord;
 	int zCoord;
+	public BuildingHandler buildingHandler;
 	
 	protected MultiMaster(Material material) {
 		super(material);
@@ -35,7 +37,7 @@ public class MultiMaster extends BlockContainer {
 		world.setTileEntity(x, y, z, createNewTileEntity(world, 1));
 	}
 	
-	public boolean built() {
+	public boolean built(AssemblyResult result, int Sx, int Sy, int Sz, World worldObj, int maxBlocks) {
 		return false;
 	}
 	
@@ -45,7 +47,11 @@ public class MultiMaster extends BlockContainer {
 		if (world.isRemote) {
 		Item wrench = new MultiWrench();
 		if (player.inventory.getCurrentItem()!=null){
-			if (player.inventory.getCurrentItem().getItem().getUnlocalizedName().equals(wrench.getUnlocalizedName())&&built()) {
+			AssemblyResult result = new AssemblyResult();
+			result.xOffset = x;
+			result.yOffset = y;
+			result.zOffset = z;
+			if (player.inventory.getCurrentItem().getItem().getUnlocalizedName().equals(wrench.getUnlocalizedName())&&built(result, x, y, z, world, maxBlocks)) {
 				MultiControllerTileEntity tileEntity = (MultiControllerTileEntity) world.getTileEntity(x, y, z);
 				tileEntity.setMultiBlock(new MultiBlock(x, y, z));
 				this.xCoord = x;

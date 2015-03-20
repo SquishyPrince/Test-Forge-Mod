@@ -4,6 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 
 public class MultiBlock {
 	
+	String sName = "p";
 	private MultiMaster multiBlockController;
 	public String chName;
 	public int x;
