@@ -16,9 +16,9 @@ public class BuildingHandler {
 	Block[][][] mapVar3; //controller Left
 	Block[][][] mapVar4; //controller Down
 	
-	List<Block> validBlocks;
+	List<String> validBlocks;
 	
-	public BuildingHandler(Block[][][] map, List<Block> validBlocks) {
+	public BuildingHandler(Block[][][] map, List<String> validBlocks) {
 		if (map!=null){
 			this.mapVar1=map;
 			this.mapVar2=new Block[map.length][map[0][0].length][map[0].length];
@@ -71,26 +71,39 @@ public class BuildingHandler {
 		Block[][][] temp = null;
 		try {
 			temp = assemble(result, Sx, Sy, Sz, worldObj, maxBlocks, parent);
-			for (int i = 0;i<temp.length;i++) {
-				System.out.println();
-				for (int j = 0;j<temp[0].length;j++) {
-					System.out.println();
-					for (int k = 0;k<temp[0][0].length;k++) {
-						System.out.print(temp[i][j][k].getUnlocalizedName().substring(temp[i][j][k].getUnlocalizedName().length()));
-					}
-				}
-			}
 		} catch (OverFlowException e) {
 			result.resultCode = AssemblyResult.OVERFLOW;
 		} catch (Error e) {
 			result.resultCode = AssemblyResult.ERROR;
 		}
-		if (temp!=null) {
+		if (temp!=null&&verify(temp)) {
 			System.out.println("Good!");
+			result.commit(((MultiMaster)result.controllerBlock.block).multiBlock);
 			return true;
 		} else {
 			return false;
 		}
+	}
+
+	private boolean verify(Block[][][] temp) {
+		boolean good = true;
+		for (int i = 0;i<temp.length;i++) {
+			System.out.println();
+			for (int j = 0;j<temp[0].length;j++) {
+				System.out.println();
+				for (int k = 0;k<temp[0][0].length;k++) {
+					//System.out.print(mapVar1[i][j][k].getUnlocalizedName().substring(mapVar1[i][j][k].getUnlocalizedName().length()-3));
+					if (!temp[i][j][k].getUnlocalizedName().equals(mapVar1[i][j][k].getUnlocalizedName())&&
+							!temp[i][j][k].getUnlocalizedName().equals(mapVar2[i][j][k].getUnlocalizedName())&&
+							!temp[i][j][k].getUnlocalizedName().equals(mapVar3[i][j][k].getUnlocalizedName())&&
+							!temp[i][j][k].getUnlocalizedName().equals(mapVar4[i][j][k].getUnlocalizedName())) {
+						System.out.println("!!");
+						good = false;
+					}
+				}
+			}
+		}
+		return good;
 	}
 
 	private Block[][][] assemble(AssemblyResult result, int sx, int sy, int sz, World worldObj, int maxBlocks, Block parent) {
@@ -109,6 +122,7 @@ public class BuildingHandler {
 			for (ChunkPosition pos : iterator)
 			{
 				openset.remove(pos);
+				System.out.println("j");
 				if (closedset.contains(pos))
 				{
 					continue;
@@ -131,8 +145,6 @@ public class BuildingHandler {
 					continue;
 				}
 				
-				temp[y-sy][z-sz][x-sx] = block;
-				
 				FoundBlock lb = new FoundBlock(block, worldObj.getBlockMetadata(x, y, z), worldObj.getTileEntity(x, y, z), pos);
 				result.assembleBlock(lb);
 				if (block == parent && result.controllerBlock == null)
@@ -147,7 +159,9 @@ public class BuildingHandler {
 				openset.add(new ChunkPosition(x, y + 1, z));
 				openset.add(new ChunkPosition(x, y, z + 1));
 			}
+			iterator.clear();
 		}
+		temp = result.getStructure(worldObj);
 		for (int i = 0;i<temp.length;i++) {
 			for (int j = 0;j<temp[0].length;j++) {
 				for (int k = 0;k<temp[0][0].length;k++) {
@@ -161,7 +175,7 @@ public class BuildingHandler {
 	}
 
 	private boolean canUseBlockForStructure(Block block, int x, int y, int z) {
-		if (this.validBlocks.contains(block)) {
+		if (validBlocks.contains(block.getUnlocalizedName())) {
 			return true;
 		}
 		return false;

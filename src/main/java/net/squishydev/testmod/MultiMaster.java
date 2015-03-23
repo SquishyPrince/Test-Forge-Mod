@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 public class MultiMaster extends BlockContainer {
 
 	private boolean blockPlaced = false;
-	private MultiBlock multiBlock;
+	public MultiBlock multiBlock;
 	int maxBlocks;
 	int xCoord;
 	int yCoord;
@@ -29,12 +29,19 @@ public class MultiMaster extends BlockContainer {
 
 	@Override
 	public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
-		return new MultiControllerTileEntity(null);
+		return new MultiControllerTileEntity();
 	}
 
 	@Override
 	public void onBlockAdded(World world, int y, int x, int z) {
 		world.setTileEntity(x, y, z, createNewTileEntity(world, 1));
+	}
+	@Override
+	public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
+		super.breakBlock(world, x, y, z, block, meta);
+		if (TestMod.worldData.getData(Vector.createVectorHelper(x, y, z))!=null) {
+			TestMod.worldData.getData(Vector.createVectorHelper(x, y, z)).removeMultiBlock();
+		}
 	}
 	
 	public boolean built(AssemblyResult result, int Sx, int Sy, int Sz, World worldObj, int maxBlocks) {
@@ -53,7 +60,7 @@ public class MultiMaster extends BlockContainer {
 			result.zOffset = z;
 			if (player.inventory.getCurrentItem().getItem().getUnlocalizedName().equals(wrench.getUnlocalizedName())&&built(result, x, y, z, world, maxBlocks)) {
 				MultiControllerTileEntity tileEntity = (MultiControllerTileEntity) world.getTileEntity(x, y, z);
-				tileEntity.setMultiBlock(new MultiBlock(x, y, z));
+				tileEntity.setMultiBlock(new MultiBlock(x, y, z, result));
 				this.xCoord = x;
 				this.yCoord = y;
 				this.zCoord = z;

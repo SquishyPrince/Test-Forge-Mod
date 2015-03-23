@@ -6,7 +6,7 @@ public class MultiControllerTileEntity  extends TileEntity{
 	
 	public MultiBlock slaveMultiBlock;
 	
-	public MultiControllerTileEntity(MultiBlock multiBlock) {
+	public MultiControllerTileEntity() {
 		
 	}
 

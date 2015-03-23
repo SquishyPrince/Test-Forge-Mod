@@ -27,14 +27,14 @@ public class MultiController extends MultiMaster {
 						{p,p,p},
 						{p,p,p}}};
 	
-	List<Block> validBlocks = new ArrayList<Block>();
+	List<String> validBlocks = new ArrayList<String>();
 	
 	public MultiController(Material rock) {
 		super(rock);
 		setBlockName("MultiController");
 		this.maxBlocks = 27;
-		validBlocks.add(this);
-		validBlocks.add(new MultiPart(Material.rock));
+		validBlocks.add(this.getUnlocalizedName());
+		validBlocks.add(new MultiPart(Material.rock).getUnlocalizedName());
 		super.buildingHandler = new BuildingHandler(map, validBlocks);
 	}
 	
@@ -44,6 +44,6 @@ public class MultiController extends MultiMaster {
 
 	@Override
 	public TileEntity createNewTileEntity(World world, int i) {
-		return new MultiControllerTileEntity(new MultiBlock(this.xCoord, this.yCoord, this.zCoord));
+		return new MultiControllerTileEntity();
 	}
 }

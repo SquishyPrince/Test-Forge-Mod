@@ -36,8 +36,23 @@ public class CustomWorldData extends WorldSavedData{
 	
 	public void addData(Vector vector, MultiBlock multiBlock) {
 		multiBlocks.put(vector, multiBlock);
-		
-		System.out.println(multiBlocks.get(Vector.createVectorHelper(vector.xCoord, vector.yCoord, vector.zCoord)).x);
+	}
+	
+	public MultiBlock getData(Vector vector) {
+		if (multiBlocks.get(vector)!=null) {
+			return multiBlocks.get(vector);
+		}
+		return null;
+	}
+	
+	public boolean getValue(MultiBlock multiBlock) {
+		return multiBlocks.containsValue(multiBlock);
+	}
+	
+	public void removeData(Vector vector) {
+		if (multiBlocks.get(vector)!=null) {
+			multiBlocks.remove(vector);
+		}
 	}
 
 	@Override
