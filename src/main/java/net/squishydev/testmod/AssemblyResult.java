@@ -134,9 +134,9 @@ public class AssemblyResult {
 		
 		for (int i = 0; i<assembledBlocks.size();i++) {
 			ChunkPosition curr = assembledBlocks.get(i).coords;
-			System.out.println(curr.chunkPosX+" X");
-			System.out.println(curr.chunkPosY+" Y");
-			System.out.println(curr.chunkPosZ+" Z");
+//			System.out.println(curr.chunkPosX+" X");
+//			System.out.println(curr.chunkPosY+" Y");
+//			System.out.println(curr.chunkPosZ+" Z");
 			if (curr.chunkPosX<min.chunkPosX||curr.chunkPosY<min.chunkPosY||curr.chunkPosZ<min.chunkPosZ) {
 				min = curr;
 			}
@@ -145,27 +145,26 @@ public class AssemblyResult {
 				max = curr;
 			}
 		}
-		System.out.println(assembledBlocks.size()+" LIST SIZE");
-		System.out.println(min.chunkPosX+" FINAL X MIN");
-		System.out.println(min.chunkPosY+" FINAL Y MIN");
-		System.out.println(min.chunkPosZ+" FINAL Z MIN");
-		System.out.println(max.chunkPosX+" FINAL X MAX");
-		System.out.println(max.chunkPosY+" FINAL Y MAX");
-		System.out.println(max.chunkPosZ+" FINAL Z MAX");
-		System.out.println(max.chunkPosX-min.chunkPosX+" FINAL X DIFF");
-		System.out.println(max.chunkPosY-min.chunkPosX+" FINAL Y DIFF");
-		System.out.println(max.chunkPosZ-min.chunkPosX+" FINAL Z DIFF");
+//		System.out.println(assembledBlocks.size()+" LIST SIZE");
+//		System.out.println(min.chunkPosX+" FINAL X MIN");
+//		System.out.println(min.chunkPosY+" FINAL Y MIN");
+//		System.out.println(min.chunkPosZ+" FINAL Z MIN");
+//		System.out.println(max.chunkPosX+" FINAL X MAX");
+//		System.out.println(max.chunkPosY+" FINAL Y MAX");
+//		System.out.println(max.chunkPosZ+" FINAL Z MAX");
+//		System.out.println(max.chunkPosX-min.chunkPosX+" FINAL X DIFF");
+//		System.out.println(max.chunkPosY-min.chunkPosX+" FINAL Y DIFF");
+//		System.out.println(max.chunkPosZ-min.chunkPosX+" FINAL Z DIFF");
 		
 		Block[][][] temp = new Block[max.chunkPosY-min.chunkPosY+1][max.chunkPosX-min.chunkPosX+1][max.chunkPosZ-min.chunkPosZ+1];
 		
-		System.out.println(temp[0][0].length+" TEMP X");
-		System.out.println(temp.length+" TEMP Y");
-		System.out.println(temp[0].length+" TEMP Z");
+//		System.out.println(temp[0][0].length+" TEMP X");
+//		System.out.println(temp.length+" TEMP Y");
+//		System.out.println(temp[0].length+" TEMP Z");
 		for (int i = 0;i<temp.length;i++) {
 			for (int j = 0;j<temp[i].length;j++) {
 				for (int k = 0;k<temp[i][j].length;k++) {
 					temp[k][i][j] = world.getBlock(j+min.chunkPosX, k+min.chunkPosY, i+min.chunkPosZ);
-					System.out.println(temp[k][i][j].getUnlocalizedName());
 				}
 			}
 		}

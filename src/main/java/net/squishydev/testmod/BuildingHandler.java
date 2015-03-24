@@ -77,7 +77,6 @@ public class BuildingHandler {
 			result.resultCode = AssemblyResult.ERROR;
 		}
 		if (temp!=null&&verify(temp)) {
-			System.out.println("Good!");
 			result.commit(((MultiMaster)result.controllerBlock.block).multiBlock);
 			return true;
 		} else {
@@ -97,7 +96,6 @@ public class BuildingHandler {
 							!temp[i][j][k].getUnlocalizedName().equals(mapVar2[i][j][k].getUnlocalizedName())&&
 							!temp[i][j][k].getUnlocalizedName().equals(mapVar3[i][j][k].getUnlocalizedName())&&
 							!temp[i][j][k].getUnlocalizedName().equals(mapVar4[i][j][k].getUnlocalizedName())) {
-						System.out.println("!!");
 						good = false;
 					}
 				}

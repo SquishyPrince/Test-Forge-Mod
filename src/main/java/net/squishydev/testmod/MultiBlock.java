@@ -13,6 +13,7 @@ public class MultiBlock {
 	
 	public MultiBlock(int x, int y, int z, AssemblyResult result) {
 		this.building = result;
+		this.x = x;
 	}
 
 	public void setMultiBlockController(MultiMaster multiController) {

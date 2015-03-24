@@ -2,11 +2,13 @@ package net.squishydev.testmod;
 
 import java.util.Iterator;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import net.minecraft.item.crafting.CraftingManager;
@@ -40,13 +42,10 @@ public class TestMod {
 	public final static Block ore = new Ore(Material.rock);
 	public final static Block crushingblock = new CrushingBlock(Material.rock);
 	public final static Block crushingblock2 = new CrushingBlock2(Material.rock);
+	public final static Block testFurnace2 = new TestFurnace2(false).setCreativeTab(CreativeTabs.tabMisc);
+	public final static Block testFurnace2Active = new TestFurnace2(true);
 	public final static CustomWorldData worldData = new CustomWorldData(WorldProvider.getProviderForDimension(0).toString());
-	
-	public static final int testFurnaceGuiId = 0;
-	
-	public static Block testFurnaceIdle = new testFurnace(Material.rock, false).setHardness(3.5f);
-	public static Block testFurnaceActive = new testFurnace(Material.rock, true).setHardness(3.5f).setLightLevel(0.9f);
-	
+
 	@Instance(value="TestMod")
 	public static TestMod instance;
 	
@@ -74,13 +73,14 @@ public class TestMod {
 		GameRegistry.registerBlock(crushingblock2, "CrushingBlock2");
 		GameRegistry.registerBlock(multiController, "MultiController");
 		GameRegistry.registerBlock(multiPart, "MultiPart");
+		GameRegistry.registerBlock(testFurnace2, "TestFurnace2");
+		GameRegistry.registerBlock(testFurnace2Active, "TestFurnace2Active");
 	}
 	
 	@EventHandler
 	public void load(FMLInitializationEvent event) {
 		proxy.registerRenderers();
 		ItemStack dirt = new ItemStack(Blocks.dirt);
-		ItemStack diamonds = new ItemStack(testFurnaceIdle, 64);
 		ItemStack gravel = new ItemStack(Blocks.gravel);
 		ItemStack furnace = new ItemStack(Blocks.furnace);
 		ItemStack oreStack = new ItemStack(ore);
@@ -101,11 +101,10 @@ public class TestMod {
 		GameRegistry.registerWorldGenerator(oregen, 0);
 		GameRegistry.registerTileEntity(CrushingBlockTileEntity.class, "CrushingBlock");
 		GameRegistry.registerTileEntity(CrushingBlockTileEntity2.class, "CrushingBlock2");
-		GameRegistry.registerBlock(testFurnaceIdle = new testFurnace(Material.rock, false), testFurnaceItemBlock.class, "TestFurnaceIdle");
-		GameRegistry.registerBlock(testFurnaceActive = new testFurnace(Material.rock, true), testFurnaceItemBlock.class, "TestFurnaceActive");
-		GameRegistry.registerTileEntity(testFurnaceTileEntity.class, "TestFurnaceTileEntity");
 		GameRegistry.registerTileEntity(MultiControllerTileEntity.class, "MultiControllerTileEntity");
-		GuiHandler guiHandler = new GuiHandler();
+		GameRegistry.registerTileEntity(TileEntityTestFurnace2.class, "TileEntityTestFurnace2");
+		GuiHandler2 guiHandler2 = new GuiHandler2();
+		NetworkRegistry.INSTANCE.registerGuiHandler(TestMod.instance, guiHandler2);
 	}
 	
 	@EventHandler
