@@ -46,7 +46,7 @@ public class TestFurnace2 extends BlockContainer {
 	public IIcon getIcon(int side, int meta) {
 		if (side == 1) {
 			return top;
-		} else if (side == 3) {
+		} else if (side == meta) {
 			return front;
 		} else {
 			return this.blockIcon;
@@ -185,25 +185,25 @@ public class TestFurnace2 extends BlockContainer {
 	
 	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(World world, int x, int y, int z, Random random) {
-		if (this.isBurning2) {
+		/*if (this.isBurning2) {
 			int direction = world.getBlockMetadata(x, y, z);
 			
 			float xx = (float) x + 0.5F, yy = (float) y + random.nextFloat()*6.0F / 16.0F, zz = (float) z + 0.5F, xx2 = random.nextFloat() * 0.3F, zz2 = 0.5F;
 			
 			if (direction == 4) {
-				world.spawnParticle("smoke", (double) (xx-zz2), (double)yy, (double)(zz+xx2), 0.0F, 0.0F, 0.0F);
-				world.spawnParticle("flame", (double) (xx-zz2), (double)yy, (double)(zz+xx2), 0.0F, 0.0F, 0.0F);
+				world.spawnParticle("smoke", (double) (-xx+zz2), (double)yy, (double)(-zz-xx2), 0.0F, 0.0F, 0.0F);
+				world.spawnParticle("flame", (double) (-xx+zz2), (double)yy, (double)(-zz-xx2), 0.0F, 0.0F, 0.0F);
 			} else if (direction == 5) {
-				world.spawnParticle("smoke", (double) (xx-zz2), (double)yy, (double)(zz+xx2), 0.0F, 0.0F, 0.0F);
-				world.spawnParticle("flame", (double) (xx-zz2), (double)yy, (double)(zz+xx2), 0.0F, 0.0F, 0.0F);
+				world.spawnParticle("smoke", (double) (-xx+zz2), (double)yy, (double)(zz+xx2), 0.0F, 0.0F, 0.0F);
+				world.spawnParticle("flame", (double) (-xx+zz2), (double)yy, (double)(zz+xx2), 0.0F, 0.0F, 0.0F);
 			} else if (direction == 3) {
-				world.spawnParticle("smoke", (double) (xx-zz2), (double)yy, (double)(zz+xx2), 0.0F, 0.0F, 0.0F);
-				world.spawnParticle("flame", (double) (xx-zz2), (double)yy, (double)(zz+xx2), 0.0F, 0.0F, 0.0F);
+				world.spawnParticle("smoke", (double) (xx-zz2), (double)yy, (double)(-zz-xx2), 0.0F, 0.0F, 0.0F);
+				world.spawnParticle("flame", (double) (xx-zz2), (double)yy, (double)(-zz-xx2), 0.0F, 0.0F, 0.0F);
 			} else if (direction == 2) {
 				world.spawnParticle("smoke", (double) (xx-zz2), (double)yy, (double)(zz+xx2), 0.0F, 0.0F, 0.0F);
 				world.spawnParticle("flame", (double) (xx-zz2), (double)yy, (double)(zz+xx2), 0.0F, 0.0F, 0.0F);
 			}
-		}
+		}*/
 	}
 
 	@Override

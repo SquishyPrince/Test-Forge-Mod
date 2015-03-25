@@ -29,7 +29,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.common.config.Configuration;
 
-@Mod(modid="TestMod",name="Test Mod", version="1.0.0")
+@Mod(modid="TestMod",name="Test Mod", version="1.1.0")
 
 public class TestMod {
 
@@ -50,7 +50,7 @@ public class TestMod {
 	public static TestMod instance;
 	
 	@SidedProxy(clientSide="net.squishydev.testmod.client.ClientProxy",
-			serverSide="net.squishydev.CommonProxy")
+			serverSide="net.squishydev.testmod.CommonProxy")
 	public static CommonProxy proxy;
 	
 	@EventHandler

@@ -36,6 +36,7 @@ public class CustomWorldData extends WorldSavedData{
 	
 	public void addData(Vector vector, MultiBlock multiBlock) {
 		multiBlocks.put(vector, multiBlock);
+		this.markDirty();
 	}
 	
 	public MultiBlock getData(Vector vector) {
@@ -53,6 +54,7 @@ public class CustomWorldData extends WorldSavedData{
 		if (multiBlocks.get(vector)!=null) {
 			multiBlocks.remove(vector);
 		}
+		this.markDirty();
 	}
 
 	@Override

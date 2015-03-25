@@ -105,16 +105,17 @@ public class TileEntityTestFurnace2 extends TileEntity implements ISidedInventor
 	
 	public void readFromNBT(NBTTagCompound tagCompound) {
 		super.readFromNBT(tagCompound);
+		//if (this.furnaceItemStacks.length<2){ 
 		NBTTagList tagList = tagCompound.getTagList("Items", 10);
 		this.furnaceItemStacks = new ItemStack[this.getSizeInventory()];
-		
+		System.out.println(tagList.tagCount()+ "Items Read");
 		for (int i = 0;i < tagList.tagCount();i++) {
 			NBTTagCompound tabCompound1 = tagList.getCompoundTagAt(i);
-			byte byte0 = tabCompound1.getByte("Slot");
-			
+			int byte0 = tabCompound1.getInteger("Slot");
 			if (byte0 >= 0 && byte0 < this.furnaceItemStacks.length){
 				this.furnaceItemStacks[byte0] = ItemStack.loadItemStackFromNBT(tabCompound1);
 			}
+			System.out.println("tag num."+i+" "+this.furnaceItemStacks[i]);
 		}
 		
 		this.furnaceBurnTime = tagCompound.getShort("BurnTime");
@@ -124,21 +125,24 @@ public class TileEntityTestFurnace2 extends TileEntity implements ISidedInventor
 		if (tagCompound.hasKey("CustomName", 8)) {
 			this.furnaceName = tagCompound.getString("CustomName");
 		}
+		//}
 	}
 	
 	public void writeToNBT(NBTTagCompound tagCompound) {
 		super.writeToNBT(tagCompound);
-		
 		tagCompound.setShort("BurnTime", (short)this.furnaceBurnTime);
 		tagCompound.setShort("CookTime", (short)this.furnaceCookTime);
 		NBTTagList tagList = new NBTTagList();
-		
+		System.out.println(this.furnaceItemStacks.length+ "Items Written");
 		for (int i = 0; i<this.furnaceItemStacks.length;i++) {
 			if (this.furnaceItemStacks[i] != null) {
+				System.out.println("tag num."+i+" "+this.furnaceItemStacks[i]);
+				System.out.println("tag written num."+i);
 				NBTTagCompound tagCompound1 = new NBTTagCompound();
-				tagCompound.setByte("Slot", (byte)i);
+				tagCompound1.setInteger("Slot", i);
 				this.furnaceItemStacks[i].writeToNBT(tagCompound1);
 				tagList.appendTag(tagCompound1);
+			
 			}
 		}
 		
