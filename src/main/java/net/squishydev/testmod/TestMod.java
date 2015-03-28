@@ -20,6 +20,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.WorldProviderSurface;
 import net.minecraftforge.common.MinecraftForge;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -28,6 +29,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.common.config.Configuration;
+import net.squishydev.testmod.Research;
 
 @Mod(modid="TestMod",name="Test Mod", version="1.1.0")
 
@@ -36,6 +38,9 @@ public class TestMod {
 	public static Item tool;
 	public static Item ignot;
 	public static Item multiWrench;
+	public static Item testBook;
+	public static ResearchClass testResearchClass;
+	public static ResearchMaster testResearch;
 	public static boolean vanillaRecipesDisabled;
 	public final static Block multiController = new MultiController(Material.rock);
 	public final static Block multiPart = new MultiPart(Material.rock);
@@ -65,9 +70,15 @@ public class TestMod {
 		tool = new Tool();
 		ignot = new Ignot();
 		multiWrench = new MultiWrench();
+		testBook = new TestBook();
+		testResearchClass = new TestResearchClass();
+		testResearch = new ResearchMaster(testResearchClass, "testResearch");
+		Research.registerResearchClass(testResearchClass, "testResearchClass");
+		Research.registerResearch(testResearch, "testResearch");
 		GameRegistry.registerItem(tool, "Tool");
 		GameRegistry.registerItem(ignot, "Ignot");
 		GameRegistry.registerBlock(ore,  "Ore");
+		GameRegistry.registerItem(testBook, "testBook");
 		GameRegistry.registerItem(multiWrench, "MultiWrench");
 		GameRegistry.registerBlock(crushingblock, "CrushingBlock");
 		GameRegistry.registerBlock(crushingblock2, "CrushingBlock2");
@@ -104,7 +115,9 @@ public class TestMod {
 		GameRegistry.registerTileEntity(MultiControllerTileEntity.class, "MultiControllerTileEntity");
 		GameRegistry.registerTileEntity(TileEntityTestFurnace2.class, "TileEntityTestFurnace2");
 		GuiHandler2 guiHandler2 = new GuiHandler2();
+		BookGuiHandler bookGuiHandler = new BookGuiHandler();
 		NetworkRegistry.INSTANCE.registerGuiHandler(TestMod.instance, guiHandler2);
+		NetworkRegistry.INSTANCE.registerGuiHandler(TestMod.instance, bookGuiHandler);
 	}
 	
 	@EventHandler
