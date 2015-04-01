@@ -16,7 +16,7 @@ public class BookGuiHandler implements IGuiHandler{
 		//System.out.println("Tried!");
 		if (ID==1) {
 			TileEntityTestFurnace2 tileEntityFurnace = (TileEntityTestFurnace2)world.getTileEntity(x, y, z);
-			return new GUITestBook(((TestPlayerData)player.getExtendedProperties("TestModData")).research);
+			return new GUITestBook(((TestPlayerData)player.getExtendedProperties("TestModData")).research, player);
 		}
 		return null;
 	}

@@ -51,7 +51,7 @@ public class Research {
 			}
 		}
 		
-		if (index!=-1) {
+		if (index!=-1&&researchAchieved!=null) {
 			return researchAchieved[index];
 		} else {
 			return false;
@@ -92,13 +92,16 @@ int index = -1;
 
 	public void setResearched(boolean[] researchAchieved) {
 		this.researchAchieved = new boolean[researchNames.length];
-		
+		System.out.println(researchNames.length+" woah there research, don't be afraid to exist! Looks like we made an array!");
 		for (int i = 0;i<researchNames.length;i++) {
 			this.researchAchieved[i] = researchAchieved[i];
+			System.out.println("And the #"+i+" value of that array was"+this.researchAchieved[i]);
 		}
+		System.out.println("All done! now the achievements of our lovely player can be known worldwide! Or similar");
 	}
 
 	public static void registerResearch(ResearchMaster testResearch, String string) {
+		System.out.println("We set up a research! It was called "+string);
 		registeredResearch.put(testResearch, string);
 	}
 	
